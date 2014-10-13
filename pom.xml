@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright (C) 2014 Salzburg Research.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+         http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.apache.marmotta</groupId>
+        <artifactId>marmotta-parent</artifactId>
+        <version>3.3.0-SNAPSHOT</version>
+        <relativePath />
+    </parent>
+
+    <groupId>org.apache.marmotta.events.iswc2014</groupId>
+    <artifactId>iswc2014-tutorial-parent</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <name>Apache Marmotta ISWC 2014 Tutorial: Parent</name>
+    <description>Code example for the Apache Marmotta tutorial at ISWC2014</description>
+    <url>http://marmotta.apache.org/events/iswc2014</url>
+
+    <inceptionYear>2014</inceptionYear>
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0</url>
+            <distribution>repo</distribution>
+            <comments>A business-friendly OSS license</comments>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <id>jakob</id>
+            <name>Jakob Frank</name>
+            <email>jakob@apache.org</email>
+            <organization>The Apache Software Foundation</organization>
+        </developer>
+        <developer>
+            <id>sschaffert</id>
+            <name>Sebastian Schaffert</name>
+            <email>sschaffert@apache.org</email>
+            <organization>The Apache Software Foundation</organization>
+        </developer>
+        <developer>
+            <id>wikier</id>
+            <name>Sergio Fernández</name>
+            <email>wikier@apache.org</email>
+            <organization>The Apache Software Foundation</organization>
+        </developer>
+        <developer>
+            <id>tkurz</id>
+            <name>Thomas Kurz </name>
+            <email>tkurz@apache.org</email>
+            <organization>The Apache Software Foundation</organization>
+        </developer>
+    </developers>
+
+
+    <properties>
+        <marmotta.version>3.3.0-SNAPSHOT</marmotta.version>
+    </properties>
+
+    <repositories>
+        <repository>
+            <id>apache.releases</id>
+            <name>Apache Relesases Repository</name>
+            <url>https://repository.apache.org/content/repositories/releases/</url>
+        </repository>
+        <repository>
+            <id>apache.snapshots</id>
+            <name>Apache Snapshots Repository</name>
+            <url>https://repository.apache.org/content/repositories/snapshots/</url>
+        </repository>
+    </repositories>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-deploy-plugin</artifactId>
+                    <version>2.8.1</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-install-plugin</artifactId>
+                    <version>2.5.1</version>
+                </plugin>
+                <plugin>
+                    <groupId>com.mycila</groupId>
+                    <artifactId>license-maven-plugin</artifactId>
+                    <version>2.6</version>
+                    <configuration>
+                        <header>parent/src/etc/header.txt</header>
+                        <strictCheck>true</strictCheck>
+                        <excludes>
+                            <exclude>LICENSE</exclude>
+                            <exclude>COPYING.txt</exclude>
+                            <exclude>NOTICE.txt</exclude>
+                            <exclude>README.txt</exclude>
+                            <exclude>target/**</exclude>
+                            <exclude>data/**</exclude>
+                            <exclude>doc/**</exclude>
+                            <exclude>**/*.txt</exclude>
+                            <exclude>**/*.rdf</exclude>
+                            <exclude>**/*.ttl</exclude>
+                            <exclude>**/*.nt</exclude>
+                            <exclude>**/test/**</exclude>
+                        </excludes>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.tomcat.maven</groupId>
+                    <artifactId>tomcat7-maven-plugin</artifactId>
+                    <version>2.2</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.apache.marmotta</groupId>
+                <artifactId>marmotta-core</artifactId>
+                <version>${marmotta.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.marmotta</groupId>
+                <artifactId>marmotta-sparql</artifactId>
+                <version>${marmotta.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.marmotta</groupId>
+                <artifactId>marmotta-ldp</artifactId>
+                <version>${marmotta.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.marmotta</groupId>
+                <artifactId>marmotta-backend-kiwi</artifactId>
+                <version>${marmotta.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.marmotta</groupId>
+                <artifactId>marmotta-ldcache-file</artifactId>
+                <version>${marmotta.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.marmotta</groupId>
+                <artifactId>marmotta-ldpath</artifactId>
+                <version>${marmotta.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.marmotta</groupId>
+                <artifactId>marmotta-ldcache-common</artifactId>
+                <version>${marmotta.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.marmotta</groupId>
+                <artifactId>marmotta-versioning-common</artifactId>
+                <version>${marmotta.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.marmotta</groupId>
+                <artifactId>marmotta-user</artifactId>
+                <version>${marmotta.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.marmotta</groupId>
+                <artifactId>marmotta-security</artifactId>
+                <version>${marmotta.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss.weld.servlet</groupId>
+                <artifactId>weld-servlet-core</artifactId>
+                <version>2.1.2.Final</version>
+            </dependency>
+            <dependency>
+                <groupId>com.h2database</groupId>
+                <artifactId>h2</artifactId>
+                <version>1.3.174</version>
+            </dependency>
+            <dependency>
+                <groupId>org.postgresql</groupId>
+                <artifactId>postgresql</artifactId>
+                <version>9.3-1100-jdbc4</version>
+            </dependency>
+            <dependency>
+                <groupId>com.thetransactioncompany</groupId>
+                <artifactId>cors-filter</artifactId>
+                <version>1.9</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <modules>
+        <module>dashboard</module>
+        <module>webapp</module>
+    </modules>
+
+</project>
