@@ -22,7 +22,7 @@
     <parent>
         <groupId>org.apache.marmotta.events.iswc2014</groupId>
         <artifactId>iswc2014-tutorial-parent</artifactId>
-        <version>1.0.0-SNAPSHOT</version>
+        <version>3.3.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>iswc2014-tutorial-webapp</artifactId>
