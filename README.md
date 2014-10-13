@@ -1,7 +1,7 @@
-ISWC2014 Apache Marmotta tutorial
-=================================
+ISWC2014 Apache Marmotta tutorial code
+======================================
 
-This repository contains some code example for the [Apache Marmotta tutorial at ISWC2014](http://marmotta.apache.org/events/iswc2014).
+Repository containing running code for the [Apache Marmotta tutorial at ISWC2014](http://marmotta.apache.org/events/iswc2014).
 
 For getting it running, just execute:
 
