@@ -5,9 +5,9 @@ Repository containing running code for the [Apache Marmotta tutorial at ISWC2014
 
 First it is convenient you get the Marmotta source build:
 
-   git clone -b develop https://git-wip-us.apache.org/repos/asf/marmotta.git
-   cd marmotta
-   mvn install -DskipTests -DskipITs
+    git clone -b develop https://git-wip-us.apache.org/repos/asf/marmotta.git
+    cd marmotta
+    mvn install -DskipTests -DskipITs
 
 And then for getting this project running, you just need to execute:
 
