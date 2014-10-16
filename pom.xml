@@ -87,7 +87,7 @@
         <marmotta.version>3.3.0-SNAPSHOT</marmotta.version>
         <marmotta.port>8080</marmotta.port>
         <marmotta.context>/</marmotta.context>
-        <marmotta.home>${project.build.directory}${file.separator}iswc2014</marmotta.home>
+        <marmotta.home>${java.io.tmpdir}${file.separator}marmotta</marmotta.home>
         <finalName>${project.artifactId}-${project.version}</finalName>
     </properties>
 
