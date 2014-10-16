@@ -93,7 +93,7 @@ The first comment was created with the **LDPR Interaction Model** so POSTing the
 
 ### Prefer-Header
 
-By providing a `Prefer`-header, a client can git the server a hint which part of the
+By providing a `Prefer`-header, a client can give the server a hint which part of the
 resource is most appropriate to the client's needs.
 
 Let's again look at the post:
