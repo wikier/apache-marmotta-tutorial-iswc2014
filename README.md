@@ -13,8 +13,6 @@ And then for getting this project running, you just need to execute:
 
     git clone git@github.com:wikier/apache-marmotta-tutorial-iswc2014.git
     cd apache-marmotta-tutorial-iswc2014
-    mvn install
-    cd webapp
-    mvn tomcat7:run
+    mvn clean tomcat7:run
 
 If you have questions, ask in the [mailing lists](http://marmotta.apache.org/mail-lists) of the project.
