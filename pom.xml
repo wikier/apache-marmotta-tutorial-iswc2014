@@ -236,6 +236,33 @@
                 <artifactId>marmotta-security</artifactId>
                 <version>${marmotta.version}</version>
             </dependency>
+
+            <dependency>
+                <groupId>org.apache.marmotta</groupId>
+                <artifactId>ldclient-provider-vimeo</artifactId>
+                <version>${marmotta.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.marmotta</groupId>
+                <artifactId>ldclient-provider-youtube</artifactId>
+                <version>${marmotta.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.marmotta</groupId>
+                <artifactId>ldclient-provider-facebook</artifactId>
+                <version>${marmotta.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.marmotta</groupId>
+                <artifactId>ldclient-provider-freebase</artifactId>
+                <version>${marmotta.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.marmotta</groupId>
+                <artifactId>ldclient-provider-mediawiki</artifactId>
+                <version>${marmotta.version}</version>
+            </dependency>
+
             <dependency>
                 <groupId>org.jboss.weld.servlet</groupId>
                 <artifactId>weld-servlet-core</artifactId>
@@ -330,7 +357,6 @@
             <groupId>org.apache.marmotta</groupId>
             <artifactId>ldclient-provider-mediawiki</artifactId>
         </dependency>
-
 
         <!-- Optional
         <dependency>
