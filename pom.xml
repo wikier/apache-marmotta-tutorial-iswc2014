@@ -198,7 +198,7 @@
             </dependency>
             <dependency>
                 <groupId>org.apache.marmotta</groupId>
-                <artifactId>marmotta-ldcache-file</artifactId>
+                <artifactId>marmotta-ldcache-kiwi</artifactId>
                 <version>${marmotta.version}</version>
             </dependency>
             <dependency>
@@ -218,6 +218,11 @@
             </dependency>
             <dependency>
                 <groupId>org.apache.marmotta</groupId>
+                <artifactId>marmotta-versioning-kiwi</artifactId>
+                <version>${marmotta.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.marmotta</groupId>
                 <artifactId>marmotta-user</artifactId>
                 <version>${marmotta.version}</version>
             </dependency>
@@ -226,6 +231,32 @@
                 <artifactId>marmotta-security</artifactId>
                 <version>${marmotta.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.apache.marmotta</groupId>
+                <artifactId>ldclient-provider-vimeo</artifactId>
+                <version>${marmotta.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.marmotta</groupId>
+                <artifactId>ldclient-provider-youtube</artifactId>
+                <version>${marmotta.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.marmotta</groupId>
+                <artifactId>ldclient-provider-facebook</artifactId>
+                <version>${marmotta.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.marmotta</groupId>
+                <artifactId>ldclient-provider-freebase</artifactId>
+                <version>${marmotta.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.marmotta</groupId>
+                <artifactId>ldclient-provider-mediawiki</artifactId>
+                <version>${marmotta.version}</version>
+            </dependency>
+
             <dependency>
                 <groupId>org.jboss.weld.servlet</groupId>
                 <artifactId>weld-servlet-core</artifactId>
@@ -250,11 +281,13 @@
     </dependencyManagement>
 
     <dependencies>
+        <!--
         <dependency>
             <groupId>org.apache.marmotta.events.iswc2014</groupId>
             <artifactId>iswc2014-tutorial-ui</artifactId>
             <version>${project.version}</version>
         </dependency>
+        -->
 
         <!-- Backend-specific dependencies -->
         <dependency>
@@ -263,7 +296,7 @@
         </dependency>
         <dependency>
             <groupId>org.apache.marmotta</groupId>
-            <artifactId>marmotta-ldcache-file</artifactId>
+            <artifactId>marmotta-ldcache-kiwi</artifactId>
         </dependency>
 
         <!-- Marmotta Modules, include the ones needed by the application -->
@@ -289,12 +322,39 @@
         </dependency>
         <dependency>
             <groupId>org.apache.marmotta</groupId>
+            <artifactId>marmotta-versioning-kiwi</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.marmotta</groupId>
             <artifactId>marmotta-user</artifactId>
         </dependency>
         <dependency>
             <groupId>org.apache.marmotta</groupId>
             <artifactId>marmotta-security</artifactId>
         </dependency>
+
+        <!-- these are wrappers for transparently accessing legacy data -->
+        <dependency>
+            <groupId>org.apache.marmotta</groupId>
+            <artifactId>ldclient-provider-vimeo</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.marmotta</groupId>
+            <artifactId>ldclient-provider-youtube</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.marmotta</groupId>
+            <artifactId>ldclient-provider-facebook</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.marmotta</groupId>
+            <artifactId>ldclient-provider-freebase</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.marmotta</groupId>
+            <artifactId>ldclient-provider-mediawiki</artifactId>
+        </dependency>
+
 
         <!-- Optional
         <dependency>
