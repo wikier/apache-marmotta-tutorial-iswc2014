@@ -17,5 +17,5 @@ And then for getting this project running, you just need to execute:
     cd apache-marmotta-tutorial-iswc2014
     mvn clean tomcat7:run
 
-If you have questions, ask us or send your question to the 
-[mailing lists](http://marmotta.apache.org/mail-lists) of the project.
+If you have questions, ask [us](http://marmotta.apache.org/events/iswc2014.html#Presenters) 
+or send your question to the [mailing lists](http://marmotta.apache.org/mail-lists) of the project.
