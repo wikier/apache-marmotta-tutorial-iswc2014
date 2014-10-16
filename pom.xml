@@ -26,14 +26,10 @@
     </parent>
 
     <groupId>org.apache.marmotta.events.iswc2014</groupId>
-    <artifactId>iswc2014-tutorial-parent</artifactId>
-    <packaging>pom</packaging>
+    <artifactId>iswc2014-tutorial</artifactId>
+    <packaging>war</packaging>
 
-    <properties>
-        <marmotta.version>3.3.0-SNAPSHOT</marmotta.version>
-    </properties>
-
-    <name>Apache Marmotta ISWC 2014 Tutorial: Parent</name>
+    <name>Apache Marmotta ISWC 2014 Tutorial</name>
     <description>Code example for the Apache Marmotta tutorial at ISWC2014</description>
     <url>http://marmotta.apache.org/events/iswc2014</url>
 
@@ -87,25 +83,23 @@
         </repository>
     </repositories>
 
+    <properties>
+        <marmotta.version>3.3.0-SNAPSHOT</marmotta.version>
+        <marmotta.port>8080</marmotta.port>
+        <marmotta.context>/</marmotta.context>
+        <marmotta.home>${project.build.directory}${file.separator}iswc2014</marmotta.home>
+        <finalName>${project.artifactId}-${project.version}</finalName>
+    </properties>
+
     <build>
         <pluginManagement>
             <plugins>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-deploy-plugin</artifactId>
-                    <version>2.8.1</version>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-install-plugin</artifactId>
-                    <version>2.5.1</version>
-                </plugin>
                 <plugin>
                     <groupId>com.mycila</groupId>
                     <artifactId>license-maven-plugin</artifactId>
                     <version>2.6</version>
                     <configuration>
-                        <header>parent/src/etc/header.txt</header>
+                        <header>src/etc/header.txt</header>
                         <strictCheck>true</strictCheck>
                         <excludes>
                             <exclude>LICENSE</exclude>
@@ -124,12 +118,60 @@
                     </configuration>
                 </plugin>
                 <plugin>
+                    <artifactId>maven-war-plugin</artifactId>
+                    <version>2.3</version>
+                    <configuration>
+                        <archive>
+                            <manifest>
+                                <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                                <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+                            </manifest>
+                        </archive>
+                        <archiveClasses>false</archiveClasses>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-install-plugin</artifactId>
+                    <configuration>
+                        <skip>true</skip>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-deploy-plugin</artifactId>
+                    <configuration>
+                        <skip>true</skip>
+                    </configuration>
+                </plugin>
+                <plugin>
                     <groupId>org.apache.tomcat.maven</groupId>
                     <artifactId>tomcat7-maven-plugin</artifactId>
                     <version>2.2</version>
+                    <configuration>
+                        <contextFile>src/main/webapp/META-INF/context.xml</contextFile>
+                        <port>${marmotta.port}</port>
+                        <path>${marmotta.context}</path>
+                        <systemProperties>
+                            <marmotta.home>${marmotta.home}</marmotta.home>
+                        </systemProperties>
+                    </configuration>
                 </plugin>
             </plugins>
         </pluginManagement>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.tomcat.maven</groupId>
+                <artifactId>tomcat7-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <artifactId>maven-dependency-plugin</artifactId>
+            </plugin>
+        </plugins>
     </build>
 
     <dependencyManagement>
@@ -207,9 +249,90 @@
         </dependencies>
     </dependencyManagement>
 
-    <modules>
-        <module>tutorial</module>
-        <module>webapp</module>
-    </modules>
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.marmotta.events.iswc2014</groupId>
+            <artifactId>iswc2014-tutorial-ui</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <!-- Backend-specific dependencies -->
+        <dependency>
+            <groupId>org.apache.marmotta</groupId>
+            <artifactId>marmotta-backend-kiwi</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.marmotta</groupId>
+            <artifactId>marmotta-ldcache-file</artifactId>
+        </dependency>
+
+        <!-- Marmotta Modules, include the ones needed by the application -->
+        <dependency>
+            <groupId>org.apache.marmotta</groupId>
+            <artifactId>marmotta-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.marmotta</groupId>
+            <artifactId>marmotta-sparql</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.marmotta</groupId>
+            <artifactId>marmotta-ldpath</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.marmotta</groupId>
+            <artifactId>marmotta-ldcache-common</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.marmotta</groupId>
+            <artifactId>marmotta-versioning-common</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.marmotta</groupId>
+            <artifactId>marmotta-user</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.marmotta</groupId>
+            <artifactId>marmotta-security</artifactId>
+        </dependency>
+
+        <!-- Optional
+        <dependency>
+            <groupId>org.apache.marmotta</groupId>
+            <artifactId>marmotta-zookeeper</artifactId>
+            <version>${marmotta.version}</version>
+        </dependency>
+        -->
+
+        <!-- JavaEE / Servlet / CDI Environment -->
+        <dependency>
+            <groupId>org.jboss.weld.servlet</groupId>
+            <artifactId>weld-servlet-core</artifactId>
+            <scope>runtime</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>javax.el</groupId>
+                    <artifactId>el-api</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.jboss.spec.javax.el</groupId>
+                    <artifactId>jboss-el-api_3.0_spec</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>com.thetransactioncompany</groupId>
+            <artifactId>cors-filter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+        </dependency>
+
+    </dependencies>
 
 </project>
