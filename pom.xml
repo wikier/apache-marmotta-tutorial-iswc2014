@@ -237,32 +237,6 @@
                 <version>${marmotta.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.apache.marmotta</groupId>
-                <artifactId>ldclient-provider-vimeo</artifactId>
-                <version>${marmotta.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.marmotta</groupId>
-                <artifactId>ldclient-provider-youtube</artifactId>
-                <version>${marmotta.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.marmotta</groupId>
-                <artifactId>ldclient-provider-facebook</artifactId>
-                <version>${marmotta.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.marmotta</groupId>
-                <artifactId>ldclient-provider-freebase</artifactId>
-                <version>${marmotta.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.marmotta</groupId>
-                <artifactId>ldclient-provider-mediawiki</artifactId>
-                <version>${marmotta.version}</version>
-            </dependency>
-
-            <dependency>
                 <groupId>org.jboss.weld.servlet</groupId>
                 <artifactId>weld-servlet-core</artifactId>
                 <version>2.1.2.Final</version>
@@ -286,13 +260,6 @@
     </dependencyManagement>
 
     <dependencies>
-        <!--
-        <dependency>
-            <groupId>org.apache.marmotta.events.iswc2014</groupId>
-            <artifactId>iswc2014-tutorial-ui</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        -->
 
         <!-- Backend-specific dependencies -->
         <dependency>
