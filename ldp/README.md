@@ -2,6 +2,20 @@
 
 After the introduction in [LDP](), let's give it a try.
 
+*NOTE*: The abrevitions used here are defined in the [LDP 1.0 Specification](http://www.w3.org/TR/ldp/) 
+which is currently a working draft. Let's revisit the most important briefly:
+
+* **LDPR**: Linked Data Platform Resource
+* **LDP-RS**: Linked Data Platform RDF Source <br>
+    An LDPR whose state is fully represented in RDF, corresponding to an RDF graph.
+* **LDP-NR**: Linked Data Platform Non-RDF Source <br>
+    For example, these can be binary or text documents that do not have useful RDF representations.
+* **LDPC**: Linked Data Platform Container
+* **LDP-BC**: Linked Data Platform Basic Container <br>
+    An LDPC that defines a simple link to its contained documents using the `ldp:contains` property.
+
+The prefix `ldp` for RDF is resolved to `http://www.w3.org/ns/ldp#`.
+
 ## Basic Data (LDP-SR and LDPC)
 
 For our scenario, we create a blog about Apache Marmotta:
@@ -11,7 +25,7 @@ For our scenario, we create a blog about Apache Marmotta:
         --data @data/blog.ttl \
         http://localhost:8080/ldp
 
-and add a first post.
+and add a first post:
 
     curl -iX POST -H "Content-Type: text/turtle" \
         -H "Slug: ISWC2014 Tutorial" \
@@ -26,29 +40,34 @@ Now, let's have a look at the data;
     curl -i -H "Accept: text/turtle" \
         http://localhost:8080/ldp/Apache-Marmotta/ISWC2014-Tutorial
 
+
 ## Binary Data (LDP-NR)
 
-Let's add an image to the blogpost:
+By default, every LDP-RS is also a container, so we can `POST` to it.
+Let's add an image (an LDP-NR) to the blogpost:
 
     curl -iX POST -H "Content-Type: image/png" \
         -H "Slug: iswc2014" \
          --data-binary @data/iswc2014.png \
          http://localhost:8080/ldp/Apache-Marmotta/ISWC2014-Tutorial
 
-For LDP-NR, Marmotta automatically creates an associated LDP-SR. Now what is present at the server?
+For LDP-NRs, Marmotta automatically creates an associated LDP-SR. Now what is present at the server?
 
     curl -I http://localhost:8080/ldp/Apache-Marmotta/ISWC2014-Tutorial/iswc2014.png
 
 The `Link`-header with `rel=describedBy` refers to the LDP-SR
 
     curl -i http://localhost:8080/ldp/Apache-Marmotta/ISWC2014-Tutorial/iswc2014
+    
+Additionally to the LDP defined `describedBy` link, Marmotta cross-references an LDP-NR 
+with its associated LDP-RS using `meta` and `content` links.
 
 Now the Blogpost `ldp:contains` the image:
 
     curl -i -H "Accept: text/turtle" \
         http://localhost:8080/ldp/Apache-Marmotta/ISWC2014-Tutorial
 
-## Update LDP-SR (POST)
+## Update LDP-SR (PUT)
 
 To refer to the image in the blogpost, we update the post. For that, we need the `ETag` of the post:
 
@@ -73,6 +92,7 @@ First, we add two commments:
         http://localhost:8080/ldp/Apache-Marmotta/ISWC2014-Tutorial
     curl -iX POST -H "Content-Type: text/turtle" \
         -H "Slug: comment" \
+        -H 'Link: <http://www.w3.org/ns/ldp#Resource>; rel="type"' \
         --data @data/comment2.ttl \
         http://localhost:8080/ldp/Apache-Marmotta/ISWC2014-Tutorial
 
@@ -85,7 +105,7 @@ There are two interaction models defined in LDP: LDPC and LDPR.
 * **LDPR**, default for LDP-NR, creates a special resource which *does not* accept
     POST requests to create new resources.
 
-The first comment was created with the **LDPR Interaction Model** so POSTing there will cause an error:
+The comments were created with the **LDPR Interaction Model** so POSTing there will cause an error:
 
     curl -iX POST -H "Content-Type: text/turtle" \
         --data @data/comment2.ttl \
