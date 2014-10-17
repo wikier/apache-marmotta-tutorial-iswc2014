@@ -7,9 +7,7 @@
 <> a sioc:Post ;
     dct:title "ISWC 2014 Tutorial - Apache Marmotta" ;
     dct:abstract "How to use the Linked Data Platform (LDP) in Apache Marmotta" ;
-    ## FIXME: relative URI is not correctly resolved
-    # foaf:depiction <iswc2014.png> ;
-    foaf:depiction <http://localhost:8080/ldp/Apache-Marmotta/ISWC2014-Tutorial/iswc2014.png> ;
+    foaf:depiction <ISWC2014-Tutorial/iswc2014.png> ;
     sioc:content """This ISWC2014 tutorial introduces into Apache Marmotta, an open
 and extensible platform for Linked Data, which provides SPARQL 1.1 and LDP 1.0 support,
 with many modules and extensions, hosted by the Apache Software Foundation. The tutorial
