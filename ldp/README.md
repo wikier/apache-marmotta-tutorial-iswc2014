@@ -1,3 +1,7 @@
+# LDP Introduction
+
+[slides](https://docs.google.com/presentation/d/1Ed_iKxYIqFuRn6OmlPoJHlAQIvIMisBn63WDM76tLpA)
+
 # LDP Hands-On
 
 After the introduction in [LDP](), let's give it a try.
