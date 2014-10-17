@@ -22,7 +22,7 @@ or send your question to the [mailing lists](http://marmotta.apache.org/mail-lis
 
 ## Acknowledgements
 
-This tutorial is partially supported by [MICO](http://mico-project.eu) (grant no. 610480) and [Fusepool P3](http://p3.fusepool.eu) (grant no. 609696) FP7 projects, as well as the Apache Software Foundation.
+This tutorial is partially supported by [MICO](http://mico-project.eu) (grant no. 610480) and [Fusepool P3](http://p3.fusepool.eu) (grant no. 609696) FP7 projects, as well as the [Apache Software Foundation](http://www.apache.org).
 
 ![MICO](http://marmotta.apache.org/images/mico.png)
 
