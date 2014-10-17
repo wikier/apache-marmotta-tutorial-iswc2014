@@ -4,7 +4,7 @@ This directory contains some sample copy and paste data and instructions that ca
 
 ## Sample Data
 
-Our sample data is a simple FOAF dataset with 3 people. You can insert it using the SPARQL explorer (Squebi):
+Our sample data is a simple FOAF dataset with 4 people. You can insert it using the SPARQL explorer (Squebi):
 
     PREFIX : <http://localhost:8080/resource/>
     PREFIX foaf: <http://xmlns.com/foaf/0.1/>
