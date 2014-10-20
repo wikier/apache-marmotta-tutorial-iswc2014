@@ -309,6 +309,10 @@
         </dependency>
         <dependency>
             <groupId>org.apache.marmotta</groupId>
+            <artifactId>marmotta-ldp</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.marmotta</groupId>
             <artifactId>marmotta-ldpath</artifactId>
         </dependency>
         <dependency>
