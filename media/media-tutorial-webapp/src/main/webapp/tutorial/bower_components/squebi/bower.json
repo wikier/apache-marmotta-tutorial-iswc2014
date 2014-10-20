@@ -1,0 +1,23 @@
+{
+  "name": "Squebi",
+  "version": "0.0.9",
+  "main": ["main.js"],
+  "dependencies": {
+  	"requirejs":"2.1.11",
+    "requirejs-plugins": "1.0.2",
+  	"jquery": "2.1.0",
+  	"angular": "1.2.14",
+  	"bootstrap":"3.1.1",
+  	"codemirror":"3.19",
+    "font-awesome": "~4.2",
+    "angular-ui-codemirror": "0.1.0",
+    "angular-bootstrap":"0.9.0",
+    "require-css":"0.1.2",
+    "angular-local-storage":"0.0.1"
+  },
+  "ignore": [
+    "pom.xml",
+    "R-logo.png"
+  ]
+
+}

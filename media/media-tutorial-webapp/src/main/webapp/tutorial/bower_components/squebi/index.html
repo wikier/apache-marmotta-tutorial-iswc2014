@@ -1,0 +1,118 @@
+<html>
+    <head>
+        <!-- Dependencies -->
+        <script type="text/javascript">
+            SQUEBI = {
+                configurable : true,
+                selectService : "https://api.redlink.io/1.0-BETA/data/squebi/sparql/select",
+                updateService : "https://api.redlink.io/1.0-BETA/data/squebi/sparql/update",
+                queryParams : {
+                    key : "E0TwfqjW3HfXdftAjmst0ElLa3fkY8TPa444e111"
+                }
+            };
+        </script>
+        <script data-main="main" src="bower_components/requirejs/require.js"></script>
+        <style>
+            #redlink:hover {
+                text-decoration: none;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="appLoader" style="margin-top: 100px; text-align: center;">
+            <img src="squebi/img/ajax-loader-big.gif">
+        </div>
+        <div style="display: none" class="container" id="squebi">
+            <div ng-controller="SampleCtrl" class="header">
+                <div ng-show="showHint">
+                    <div ng-click="showHint = false" class="hint-overlay"></div>
+                    <div class="hint" style="{{h.style}}" ng-repeat="h in hints" ng-bind-html="h.trusted_content"></div>
+                </div>
+                <ul class="nav nav-pills pull-right">
+                    <li class="menuitem"><a ng-show="hint" ng-click="showHints()">Hints</a></li>
+                    <li id="samples" class="menuitem dropdown">
+                        <a class="dropdown-toggle">
+                            Samples
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li ng-repeat="sample in samples">
+                                <a ng-click="selectSample(sample)">{{sample.name}}</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li><a href="http://github.com/tkurz/sparql-mm" target="_blank">Repository</a></li>
+                    <li><a href="mailto:thomas.kurz@salzburgresearch.at">Contact</a></li>
+                    <li ng-controller="ConfigurationCtrl" >
+                        <a ng-show="configurable" style="cursor: pointer" ng-click="open()">Configuration</a>
+                        <script type="text/ng-template" id="configuration.html">
+
+                            <div class="modal-body">
+                                <h3>Generic Parameters</h3>
+                                <table class="modal-table">
+                                    <tr><td>Select Endpoint</td><td><input ng-model="data.selectService"></td></tr>
+                                    <tr><td>Update Endpoint</td><td><input ng-model="data.updateService"></td></tr>
+                                </table>
+                                <h3>Query Parameters</h3>
+                                <table class="modal-table">
+                                    <tr ng-repeat="param in data.queryParams">
+                                        <td>{{param.name}}</td><td><input ng-model="param.value"></td>
+                                    </tr>
+                                </table>
+
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+                                <button class="btn btn-danger" ng-click="reset()">Reset</button>
+                                <button class="btn btn-primary" ng-click="store()">Store</button>
+                            </div>
+                        </script>
+                    </li>
+                </ul>
+                <h3 class="text-muted">Squebi</h3>
+                <h4 class="subtitle">The SPARQL Interface</h4>
+            </div>
+
+            <div style="position: relative" ng-controller="QueryCtrl" class="jumbotron">
+                <a href="https://github.com/tkurz/squebi"><img style="position: absolute; top: 0; right: 0; border: 0;z-index: 20" src="https://camo.githubusercontent.com/652c5b9acfaddf3a9c326fa6bde407b87f7be0f4/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6f72616e67655f6666373630302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png"></a>
+
+                <div id="query-container" resizable>
+                    <textarea id="input" ng-model="query" ui-codemirror="editorOptions"></textarea>
+                </div>
+                <a class="btn btn-lg btn-success btn-query" ng-click="triggerQuery()">
+                    <i class="fa fa-play-circle"></i> Run
+                </a>
+                <a id="redlink" href="http://redlink.co" style="position: absolute;right:40px;bottom:98px">
+                    <div style="color:#888;padding-right: 5px;display: inline; font-size: 16px">powered by</div><img title="Redlink" style="width: 25px;margin-top:-5px;" src="R-logo.png">
+                </a>
+            </div>
+
+            <div ng-controller="AlertCtrl">
+                <div class="alert ng-isolate-scope alert-success" ng-class="'alert-' + (alert.type || 'warning')" ng-repeat="alert in alerts">
+                    <button type="button" class="close" ng-click="remove(alert)">x</button>
+                    <div>
+                        <h2 ng-show="alert.title">{{alert.title}}</h2>
+                        <span>{{alert.msg}}</span>
+                    </div>
+                </div>
+            </div>
+            <div ng-show="showResults" ng-controller="FormatCtrl">
+                <ul id="writers" class="nav nav-tabs">
+                    <li ng-repeat="writer in writers" ng-class="getClass(writer)">
+                        <a title="{{writer.description}}" ng-click="selectWriter($event,writer)" href="#">{{writer.label}}</a>
+                    </li>
+                </ul>
+            </div>
+            <div ng-show="showResults" ng-controller="ResultCtrl" class="row result">
+                <div ng-show="!loader" ng-include src="template"></div>
+                <div class="loader" ng-show="loader">
+                    <img src="squebi/img/ajax-loader.gif">
+                </div>
+            </div>
+            <div class="footer">
+                <p>&copy; Salzburg Research 2014</p>
+            </div>
+
+        </div>
+
+    </body>
+</html>
