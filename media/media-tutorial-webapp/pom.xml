@@ -1,0 +1,585 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+   Licensed to the Apache Software Foundation (ASF) under one or more
+   contributor license agreements.  See the NOTICE file distributed with
+   this work for additional information regarding copyright ownership.
+   The ASF licenses this file to You under the Apache License, Version 2.0
+   (the "License"); you may not use this file except in compliance with
+   the License.  You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0  
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.apache.marmotta.extension</groupId>
+    <artifactId>media-tutorial-webapp</artifactId>
+    <packaging>war</packaging>
+
+    <name>Media Tutorial Webapp</name>
+    <description>The Media Tutorial Webapp WAR bundle</description>
+    <version>1.0-SNAPSHOT</version>
+
+    <repositories>
+        <repository>
+            <id>oss-sonatype</id>
+            <name>oss-sonatype</name>
+            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+
+    <properties>
+        <marmotta.home>${java.io.tmpdir}${file.separator}Media Tutorial Webapp</marmotta.home>
+        <marmotta.context>/</marmotta.context>
+        <marmotta.port>8080</marmotta.port>
+        <marmotta.backend>kiwi</marmotta.backend>
+
+        <project.build.sourceEncoding>utf-8</project.build.sourceEncoding>
+
+        <marmotta.version>3.3.0-SNAPSHOT</marmotta.version>
+        <sesame.version>2.7.13</sesame.version>
+        <junit.version>4.11</junit.version>
+        <weld.version>2.1.Final</weld.version>
+        <weld.core.version>2.1.2.Final</weld.core.version>
+        <rest.assured.version>2.3.2</rest.assured.version>
+        <hamcrest.version>1.3</hamcrest.version>
+        <tempus.fugit.version>1.1</tempus.fugit.version>
+        <jatl.version>0.2.2</jatl.version>
+        <servlet.api.version>3.0.1</servlet.api.version>
+        <javax.el.version>2.2.4</javax.el.version>
+        <h2.version>1.4.178</h2.version>
+        <postgresql.version>9.3-1100-jdbc4</postgresql.version>
+        <mysql.version>5.1.21</mysql.version>
+        <jetty.version>9.2.1.v20140609</jetty.version>
+        <resteasy.version>3.0.8.Final</resteasy.version>
+        <jackson.version>2.3.3</jackson.version>
+        <titan.version>0.4.2</titan.version>
+    </properties>
+
+    <build>
+        <finalName>marmotta</finalName>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.0</version>
+                    <configuration>
+                        <source>1.7</source>
+                        <target>1.7</target>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>2.12.4</version>
+                    <configuration>
+                        <useSystemClassLoader>false</useSystemClassLoader>
+                        <forkMode>always</forkMode>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-war-plugin</artifactId>
+                    <version>2.3</version>
+                    <configuration>
+                        <archive>
+                            <manifest>
+                                <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                                <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+                            </manifest>
+                        </archive>
+                        <archiveClasses>false</archiveClasses>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-deploy-plugin</artifactId>
+                    <version>2.7</version>
+                    <configuration>
+                        <skip>true</skip>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.tomcat.maven</groupId>
+                    <artifactId>tomcat7-maven-plugin</artifactId>
+                    <version>2.2</version>
+                    <configuration>
+                        <contextFile>src/main/webapp/META-INF/context.xml</contextFile>
+                        <path>${marmotta.context}</path>
+                        <port>${marmotta.port}</port>
+                        <systemProperties>
+                            <marmotta.home>${marmotta.home}</marmotta.home>
+                        </systemProperties>
+                        <skipErrorOnShutdown>true</skipErrorOnShutdown>
+                        <!-- <contextReloadable>true</contextReloadable> -->
+                        <!-- <backgroundProcessorDelay>10</backgroundProcessorDelay> -->
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.tomcat.maven</groupId>
+                <artifactId>tomcat7-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>tomcat-run</id>
+                        <phase>pre-integration-test</phase>
+                        <goals>
+                            <goal>shutdown</goal>
+                            <goal>run-war-only</goal>
+                        </goals>
+                        <configuration>
+                            <fork>true</fork>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>shutdown</id>
+                        <phase>post-integration-test</phase>
+                        <goals><goal>shutdown</goal></goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>com.googlecode.maven-download-plugin</groupId>
+                <artifactId>maven-download-plugin</artifactId>
+                <version>1.1.0</version>
+                <executions>
+                    <execution>
+                        <id>fetch-indexjsp</id>
+                        <phase>integration-test</phase>
+                        <goals>
+                            <goal>wget</goal>
+                        </goals>
+                        <configuration>
+                            <url>http://localhost:${marmotta.port}${marmotta.context}index.jsp</url>
+                            <outputFileName>index.html</outputFileName>
+                            <outputDirectory>${project.build.directory}/it/</outputDirectory>
+                            <skipCache>true</skipCache>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>fetch-config</id>
+                        <phase>integration-test</phase>
+                        <goals>
+                            <goal>wget</goal>
+                        </goals>
+                        <configuration>
+                            <url>http://localhost:${marmotta.port}${marmotta.context}config/data/kiwi.version</url>
+                            <outputFileName>kiwi-version.json</outputFileName>
+                            <outputDirectory>${project.build.directory}/it/</outputDirectory>
+                            <skipCache>true</skipCache>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-verifier-plugin</artifactId>
+                <version>1.0</version>
+                <executions>
+                    <execution>
+                        <id>check-files</id>
+                        <phase>verify</phase>
+                        <goals><goal>verify</goal></goals>
+                        <configuration>
+                            <basedir>${project.build.directory}/it/</basedir>
+                            <verificationFile>${basedir}/src/test/resources/verification.xml</verificationFile>
+                            <failOnError>true</failOnError>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-dependency-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
+    <profiles>
+
+        <!-- backend profiles -->
+
+        <profile>
+            <id>kiwi</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+                <property>
+                    <name>marmotta.backend</name>
+                    <value>kiwi</value>
+                </property>
+            </activation>
+            <dependencies>
+                <dependency>
+                    <groupId>org.apache.marmotta</groupId>
+                    <artifactId>marmotta-backend-kiwi</artifactId>
+                    <version>${marmotta.version}</version>
+                </dependency>
+                <dependency>
+                    <groupId>org.apache.marmotta</groupId>
+                    <artifactId>marmotta-ldcache-kiwi</artifactId>
+                    <version>${marmotta.version}</version>
+                </dependency>
+                <dependency>
+                    <groupId>org.apache.marmotta</groupId>
+                    <artifactId>marmotta-reasoner-kiwi</artifactId>
+                    <version>${marmotta.version}</version>
+                </dependency>
+                <dependency>
+                    <groupId>org.apache.marmotta</groupId>
+                    <artifactId>marmotta-versioning-kiwi</artifactId>
+                    <version>${marmotta.version}</version>
+                </dependency>
+            </dependencies>
+        </profile>
+
+        <profile>
+            <id>titan-berkeleydb</id>
+            <activation>
+                <property>
+                    <name>marmotta.backend</name>
+                    <value>titan-berkeleydb</value>
+                </property>
+            </activation>
+            <dependencies>
+                <dependency>
+                    <groupId>org.apache.marmotta</groupId>
+                    <artifactId>marmotta-backend-titan</artifactId>
+                    <version>${marmotta.version}</version>
+                </dependency>
+                <dependency>
+                    <groupId>org.apache.marmotta</groupId>
+                    <artifactId>marmotta-ldcache-file</artifactId>
+                    <version>${marmotta.version}</version>
+                </dependency>
+                <dependency>
+                    <groupId>com.thinkaurelius.titan</groupId>
+                    <artifactId>titan-berkeleyje</artifactId>
+                    <version>${titan.version}</version>
+                </dependency>
+            </dependencies>
+        </profile>
+
+        <profile>
+            <id>titan-hbase</id>
+            <activation>
+                <property>
+                    <name>marmotta.backend</name>
+                    <value>titan-hbase</value>
+                </property>
+            </activation>
+            <dependencies>
+                <dependency>
+                    <groupId>org.apache.marmotta</groupId>
+                    <artifactId>marmotta-backend-titan</artifactId>
+                    <version>${marmotta.version}</version>
+                </dependency>
+                <dependency>
+                    <groupId>org.apache.marmotta</groupId>
+                    <artifactId>marmotta-ldcache-file</artifactId>
+                    <version>${marmotta.version}</version>
+                </dependency>
+                <dependency>
+                    <groupId>com.thinkaurelius.titan</groupId>
+                    <artifactId>titan-hbase</artifactId>
+                    <version>${titan.version}</version>
+
+                    <exclusions>
+                        <exclusion>
+                            <groupId>org.mortbay.jetty</groupId>
+                            <artifactId>servlet-api</artifactId>
+                        </exclusion>
+                        <exclusion>
+                            <groupId>org.mortbay.jetty</groupId>
+                            <artifactId>servlet-api-2.5</artifactId>
+                        </exclusion>
+                        <exclusion>
+                            <groupId>org.mortbay.jetty</groupId>
+                            <artifactId>jsp-2.1</artifactId>
+                        </exclusion>
+                        <exclusion>
+                            <groupId>org.mortbay.jetty</groupId>
+                            <artifactId>jsp-api-2.1</artifactId>
+                        </exclusion>
+                        <exclusion>
+                            <groupId>log4j</groupId>
+                            <artifactId>log4j</artifactId>
+                        </exclusion>
+                        <exclusion>
+                            <groupId>org.slf4j</groupId>
+                            <artifactId>slf4j-log4j12</artifactId>
+                        </exclusion>
+                    </exclusions>
+                </dependency>
+            </dependencies>
+        </profile>
+
+        <profile>
+            <id>bigdata</id>
+            <activation>
+                <property>
+                    <name>marmotta.backend</name>
+                    <value>bigdata</value>
+                </property>
+            </activation>
+            <dependencies>
+                <dependency>
+                    <groupId>org.apache.marmotta</groupId>
+                    <artifactId>marmotta-backend-bigdata</artifactId>
+                    <version>${marmotta.version}</version>
+                </dependency>
+                <dependency>
+                    <groupId>org.apache.marmotta</groupId>
+                    <artifactId>marmotta-ldcache-file</artifactId>
+                    <version>${marmotta.version}</version>
+                </dependency>
+            </dependencies>
+        </profile>
+
+
+        <!-- Caching Backends for KiWi -->
+
+        <profile>
+            <id>infinispan</id>
+            <activation>
+                <property>
+                    <name>marmotta.caching</name>
+                    <value>infinispan</value>
+                </property>
+            </activation>
+            <dependencies>
+                <dependency>
+                    <groupId>org.apache.marmotta</groupId>
+                    <artifactId>kiwi-caching-infinispan</artifactId>
+                    <version>${marmotta.version}</version>
+                </dependency>
+            </dependencies>
+        </profile>
+
+        <profile>
+            <id>hazelcast</id>
+            <activation>
+                <property>
+                    <name>marmotta.caching</name>
+                    <value>hazelcast</value>
+                </property>
+            </activation>
+            <dependencies>
+                <dependency>
+                    <groupId>org.apache.marmotta</groupId>
+                    <artifactId>kiwi-caching-hazelcast</artifactId>
+                    <version>${marmotta.version}</version>
+                </dependency>
+            </dependencies>
+        </profile>
+
+        <profile>
+            <id>ehcache</id>
+            <activation>
+                <property>
+                    <name>marmotta.caching</name>
+                    <value>ehcache</value>
+                </property>
+            </activation>
+            <dependencies>
+                <dependency>
+                    <groupId>org.apache.marmotta</groupId>
+                    <artifactId>kiwi-caching-ehcache</artifactId>
+                    <version>${marmotta.version}</version>
+                </dependency>
+            </dependencies>
+        </profile>
+
+        <profile>
+            <id>zookeeper</id>
+            <dependencies>
+                <dependency>
+                    <groupId>org.apache.marmotta</groupId>
+                    <artifactId>marmotta-zookeeper</artifactId>
+                    <version>${marmotta.version}</version>
+                </dependency>
+            </dependencies>
+        </profile>
+
+        <profile>
+            <id>cleanall</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-clean-plugin</artifactId>
+                        <version>2.5</version>
+                        <configuration>
+                            <filesets>
+                                <fileset>
+                                    <directory>${marmotta.home}</directory>
+                                    <followSymlinks>true</followSymlinks>
+                                </fileset>
+                            </filesets>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <!-- This profile is used for integration testing
+                 during the build of the archetype.
+                 In your target project you can safely remove
+                 this profile.
+              -->
+            <id>archetype-it</id>
+            <properties>
+                <marmotta.port>53774</marmotta.port>
+            </properties>
+        </profile>
+    </profiles>
+
+    <dependencies>
+        <!-- Modules, include the ones needed by the application -->
+        <dependency>
+            <groupId>org.apache.marmotta</groupId>
+            <artifactId>marmotta-core</artifactId>
+            <version>${marmotta.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.marmotta</groupId>
+            <artifactId>marmotta-sparql</artifactId>
+            <version>${marmotta.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.marmotta</groupId>
+            <artifactId>marmotta-ldpath</artifactId>
+            <version>${marmotta.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.marmotta</groupId>
+            <artifactId>marmotta-ldcache-common</artifactId>
+            <version>${marmotta.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.marmotta</groupId>
+            <artifactId>marmotta-versioning-common</artifactId>
+            <version>${marmotta.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.marmotta</groupId>
+            <artifactId>marmotta-user</artifactId>
+            <version>${marmotta.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.marmotta</groupId>
+            <artifactId>marmotta-security</artifactId>
+            <version>${marmotta.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.marmotta.extension</groupId>
+            <artifactId>media-tutorial-module</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.tkurz</groupId>
+            <artifactId>sparql-mm</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
+
+        <!-- JavaEE / Servlet / CDI Environment -->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>${servlet.api.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>javax.el</groupId>
+            <artifactId>javax.el-api</artifactId>
+            <version>${javax.el.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.weld.servlet</groupId>
+            <artifactId>weld-servlet-core</artifactId>
+            <version>${weld.core.version}</version>
+            <scope>runtime</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>javax.el</groupId>
+                    <artifactId>el-api</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.jboss.spec.javax.el</groupId>
+                    <artifactId>jboss-el-api_3.0_spec</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.weld</groupId>
+            <artifactId>weld-core</artifactId>
+            <version>${weld.core.version}</version>
+            <scope>runtime</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.javassist</groupId>
+                    <artifactId>javassist</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.jboss.spec.javax.el</groupId>
+                    <artifactId>jboss-el-api_3.0_spec</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>${h2.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>${postgresql.version}</version>
+        </dependency>
+        <!-- enable for MySQL support; note that the MySQL driver is GPL licensed -->
+        <!--
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>${mysql.version}</version>
+        </dependency>
+        -->
+        <dependency>
+            <groupId>com.thetransactioncompany</groupId>
+            <artifactId>cors-filter</artifactId>
+            <version>1.9</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>javax.servlet</groupId>
+                    <artifactId>servlet-api</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+    </dependencies>
+
+</project>

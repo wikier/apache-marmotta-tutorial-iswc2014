@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html ng-app="mediaDemo">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Semantic Multimedia Demo</title>
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="css/imgareaselect-animated.css">
+    <link rel="stylesheet" href="style.css">
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="lib/jquery.imgareaselect.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="demo.js"></script>
+</head>
+<body>
+<div class="header">
+    <h1>
+        <div>Semantic Multimedia with Apache Marmotta</div>
+        <img src="images/Marmotta_Head.png">
+    </h1>
+</div>
+<div ng-controller="AnnotateCtrl" class="container co-md-12">
+    <div style="border-radius: 4px;padding: 10px;margin-bottom: 30px" class="bg-info">
+        <h1>Annotate image</h1>
+        <p class=" alert-info">Here you annotate images. Remember it is just for demo purposes, so don't stress it to much ;)<br>
+            You need to enter an url of an ldp resource that you have already uploaded via curl like this:</p>
+        <pre>curl -X POST http://localhost:8080/ldp --data-binary @lions.jpg -H 'Content-Type:image/jpeg' -v</pre>
+    </div>
+    <label for="url" style="float: left">Insert the url of the image you uploaded (it is the in Location header of the response)</label>
+    <input id="url" ng-model="url" type="text" style="float: left" class="col-md-10"/>
+    <button class="btn btn-primary" style="margin-left: 10px; float: left" class="left col-md-2" ng-click="loadImage()">Use</button>
+    <div style="clear: both"></div>
+    <div ng-show="src != null" class="container demo co-md-12">
+        <div style="float: left; width: 50%;">
+            <p class="instructions">
+                Click and drag on the image to select an area.
+            </p>
+
+            <div class="frame" style="margin: 0 0.3em; width: 95%">
+                <img id="photo" style="width:100%" ng-src="{{src}}" ng-show="src != null"/>
+            </div>
+        </div>
+
+        <div style="float: left; width: 50%;">
+
+            <table style="margin-top: 1em;margin-bottom: 30px">
+                <thead>
+                <tr>
+                    <th colspan="2" style="font-size: 110%; font-weight: bold; text-align: left; padding-left: 0.1em;">
+                        Coordinates
+                    </th>
+                    <th colspan="2" style="font-size: 110%; font-weight: bold; text-align: left; padding-left: 0.1em;">
+                        Dimensions
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td style="width: 10%;"><b>X<sub>1</sub>:</b></td>
+                    <td style="width: 30%;"><input ng-model="x" type="text" id="x1" value="-"></td>
+                    <td style="width: 20%;"><b>Width:</b></td>
+                    <td><input ng-model="w" type="text" value="-" id="w"></td>
+                </tr>
+                <tr>
+                    <td><b>Y<sub>1</sub>:</b></td>
+                    <td><input ng-model="y" type="text" id="y1" value="-"></td>
+                    <td><b>Height:</b></td>
+                    <td><input ng-model="h" type="text" id="h" value="-"></td>
+                </tr>
+                <tr>
+                    <td><b>X<sub>2</sub>:</b></td>
+                    <td><input ng-model="x2" type="text" id="x2" value="-"></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><b>Y<sub>2</sub>:</b></td>
+                    <td><input ng-model="y2" type="text" id="y2" value="-"></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                </tbody>
+            </table>
+            <span style="font-size: 110%;font-weight: bold;">Annotation value:</span><input ng-model="name" type="text" style="margin-left: 10px;width:400px;">
+            <div style="width: 100%;margin-top: 20px;text-align: center">
+                <button class="btn btn-success" ng-click="annotate()">Create Annotation</button>
+            </div>
+        </div>
+    </div>
+    <div style="clear: both"></div>
+    <div style="border-radius: 4px;padding: 10px;margin: 30px 0" class="bg-info">
+        <p class=" alert-info">When you made some annotations you can try to get back the information via SPARQL.
+            You find an interface for that <a href="query.html">here.</a></p>
+    </div>
+
+</div>
+</body>
+</html>
