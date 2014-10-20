@@ -20,6 +20,10 @@ And then for getting this project running, you just need to execute:
 If you have questions, ask [us](http://marmotta.apache.org/events/iswc2014.html#Presenters) 
 or send your question to the [mailing lists](http://marmotta.apache.org/mail-lists) of the project.
 
+## Slides
+
+  * [Introduction](http://de.slideshare.net/wastl/apache-marmotta-introduction)
+
 ## Acknowledgements
 
 This tutorial is partially supported by [MICO](http://mico-project.eu) (grant no. 610480) and [Fusepool P3](http://p3.fusepool.eu) (grant no. 609696) FP7 projects, as well as the [Apache Software Foundation](http://www.apache.org).
