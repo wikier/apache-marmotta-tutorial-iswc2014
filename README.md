@@ -23,6 +23,7 @@ or send your question to the [mailing lists](http://marmotta.apache.org/mail-lis
 ## Slides
 
   * [Introduction](http://de.slideshare.net/wastl/apache-marmotta-introduction)
+  * [Linked Data Platform](https://docs.google.com/presentation/d/1Ed_iKxYIqFuRn6OmlPoJHlAQIvIMisBn63WDM76tLpA)
 
 ## Acknowledgements
 
