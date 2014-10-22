@@ -8,6 +8,7 @@ import com.jayway.restassured.response.Response;
 import org.apache.marmotta.platform.core.test.base.JettyMarmotta;
 import org.apache.marmotta.platform.ldp.webservices.LdpWebService;
 import org.apache.marmotta.tutorial.vocabularies.OA;
+import org.hamcrest.CoreMatchers;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -53,68 +54,74 @@ public class ImageWebserviceTest {
         byte[] img = Resources.toByteArray(Resources.getResource("lions.jpg"));
 
         Response response1 = RestAssured
-                .given()
+            .given()
                 .content(img)
                 .header(HttpHeaders.CONTENT_TYPE, "image/jpeg")
-                .expect()
+            .expect()
                 .statusCode(201)
-                .when()
+            .when()
                 .post(LdpWebService.PATH)
-                .andReturn();
+            .andReturn();
 
         String resourceUri = response1.getHeader("Location");
 
-        Response response3 = RestAssured.given()
+        Response response3 = RestAssured
+            .given()
                 .header(HttpHeaders.ACCEPT, "image/jpeg")
-                .expect()
+            .expect()
                 .statusCode(200)
-                .when()
+                .body(CoreMatchers.notNullValue())
+            .when()
                 .get(resourceUri + "?xywh=333,354,135,115")
-                .andReturn();
+            .andReturn();
 
         BufferedImage image = ImageIO.read(response3.body().asInputStream());
 
         draw(image);
-        Thread.sleep(5000);
 
         Assert.assertEquals(135, image.getWidth());
         Assert.assertEquals(115, image.getHeight());
 
         //add annotation
         Response response4 = RestAssured
-                .given()
+            .given()
                 .content((
                         "<> a <" + OA.Annotation + ">; " +
                                 "<" + OA.hasTarget + "> <" + resourceUri + "#xywh=333,354,135,115>; " +
                                 "<" + OA.hasBody + "> \"Lion\".").getBytes())
                 .header(HttpHeaders.CONTENT_TYPE, RDFFormat.TURTLE.getDefaultMIMEType())
-                .expect()
+            .expect()
                 .statusCode(201)
-                .when()
+            .when()
                 .post(resourceUri.substring(0,resourceUri.length() - ".jpg".length()))
-                .andReturn();
+            .andReturn();
 
         String annotationUri = response4.getHeader("Location");
 
-        Response response5 = RestAssured.given()
+        Response response5 = RestAssured
+            .given()
                 .header(HttpHeaders.ACCEPT, RDFFormat.TURTLE.getDefaultMIMEType())
-                .expect()
+            .expect()
                 .statusCode(200)
+            .when()
                 .get(annotationUri)
-                .andReturn();
+            .andReturn();
 
         String result = response5.getBody().print();
         Assert.assertTrue(result.contains("<http://www.w3.org/ns/oa#hasBody> \"Lion\" ."));
     }
 
-    private JFrame draw(BufferedImage img) {
-        JFrame frame = new JFrame();
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.getContentPane().setLayout(new FlowLayout());
-        frame.getContentPane().add(new JLabel(new ImageIcon(img)));
-        frame.pack();
-        frame.setVisible(true);
-        return frame;
-    }
+    private void draw(BufferedImage img) throws InterruptedException {
+        if (!GraphicsEnvironment.isHeadless()) {
+            JFrame frame = new JFrame();
+            frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+            frame.getContentPane().setLayout(new FlowLayout());
+            frame.getContentPane().add(new JLabel(new ImageIcon(img)));
+            frame.pack();
+            frame.setVisible(true);
 
+            // Wait for 5 secs to allow looking at the cropped image
+            Thread.sleep(5000);
+        }
+    }
 }

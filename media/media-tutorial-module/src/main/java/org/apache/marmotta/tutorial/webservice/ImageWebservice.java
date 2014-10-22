@@ -4,7 +4,10 @@ import org.apache.marmotta.platform.ldp.webservices.LdpWebService;
 import org.apache.marmotta.platform.ldp.webservices.PreferHeader;
 import org.apache.marmotta.tutorial.api.ImageService;
 import org.apache.marmotta.tutorial.model.Rectangle;
+import org.jboss.resteasy.spi.NoLogWebApplicationException;
 import org.openrdf.repository.RepositoryException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.imageio.ImageIO;
@@ -12,8 +15,8 @@ import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 
 /**
  * ...
@@ -23,6 +26,8 @@ import java.io.IOException;
 @ApplicationScoped
 @Path(LdpWebService.PATH + "{local:.*}")
 public class ImageWebservice extends LdpWebService {
+
+    private Logger log = LoggerFactory.getLogger(this.getClass());
 
     @Inject
     ImageService imageService;
@@ -51,23 +56,33 @@ public class ImageWebservice extends LdpWebService {
 
             try {
 
-                BufferedImage image = imageService.getImage(uri,
+                final BufferedImage image = imageService.getImage(uri,
                         rectangle.getX(),
                         rectangle.getY(),
                         rectangle.getW(),
                         rectangle.getH()
                 );
 
-                String mimetype = imageService.getMimeType(uri);
+                final String mimetype = imageService.getMimeType(uri);
 
-                System.out.println("New image has size: " + image.getWidth() + "," + image.getHeight());
-                System.out.println("image has mimetype: " + mimetype);
+                log.debug("New image has size: {}x{}", image.getWidth(), image.getHeight());
+                log.debug("image has mimetype: {}", mimetype);
 
-                ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                ImageIO.write(image, "png", baos);
-                byte[] imageData = baos.toByteArray();
 
-                return Response.ok().header("Content-Type", mimetype).entity(imageData).build();
+
+                final StreamingOutput entity = new StreamingOutput() {
+                    @Override
+                    public void write(OutputStream output) throws IOException, WebApplicationException {
+                        final String format = mimetype.replaceFirst("^image/", "");
+                        if (ImageIO.getImageWritersByFormatName(format).hasNext()) {
+                            ImageIO.write(image, format, output);
+                        } else {
+                            throw new NoLogWebApplicationException(Response.Status.NOT_ACCEPTABLE);
+                        }
+                    }
+                };
+
+                return Response.ok().header("Content-Type", mimetype).entity(entity).build();
 
             } catch (IllegalArgumentException e) {
                 return super.GET(uriInfo, type, preferHeader);
