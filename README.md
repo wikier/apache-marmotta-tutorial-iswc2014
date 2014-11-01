@@ -22,8 +22,9 @@ or send your question to the [mailing lists](http://marmotta.apache.org/mail-lis
 
 ## Slides
 
-  * [Introduction](http://de.slideshare.net/wastl/apache-marmotta-introduction)
-  * [Linked Data Platform](https://docs.google.com/presentation/d/1Ed_iKxYIqFuRn6OmlPoJHlAQIvIMisBn63WDM76tLpA)
+  * [Introduction](http://www.slideshare.net/wastl/apache-marmotta-introduction)
+  * [Linked Data Platform](http://www.slideshare.net/Wikier/introduction-to-ldp-in-apache-marmotta)
+  * [Semantic Media Management](http://www.slideshare.net/thkurz1/semantic-media-managent-with-apache-marmotta)
 
 ## Acknowledgements
 
