@@ -45,7 +45,6 @@
 
         <project.build.sourceEncoding>utf-8</project.build.sourceEncoding>
 
-        <marmotta.version>3.3.0-SNAPSHOT</marmotta.version>
         <sesame.version>2.7.13</sesame.version>
         <junit.version>4.11</junit.version>
         <weld.version>2.1.Final</weld.version>

@@ -84,7 +84,7 @@
     </repositories>
 
     <properties>
-        <marmotta.version>3.3.0-SNAPSHOT</marmotta.version>
+        <marmotta.version>3.4.0-SNAPSHOT</marmotta.version>
         <marmotta.port>8080</marmotta.port>
         <marmotta.context>/</marmotta.context>
         <marmotta.home>${java.io.tmpdir}${file.separator}marmotta</marmotta.home>
